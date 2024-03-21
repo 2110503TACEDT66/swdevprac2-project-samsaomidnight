@@ -14,6 +14,10 @@ export default async function DashboardPage() {
         const picture = addMassageForm.get("picture")
         const address = addMassageForm.get("address")
         const tel = addMassageForm.get("tel")
+
+        const day = addMassageForm.get("day");
+        const open = addMassageForm.get("open");
+        const close = addMassageForm.get("close");
         
 
         try{
@@ -23,6 +27,7 @@ export default async function DashboardPage() {
                 "picture": picture,
                 "address": address,
                 "tel": tel,
+                "open_close_times": [{ day, open, close }]
             })
         } catch(error){
             console.log(error)
@@ -79,8 +84,30 @@ export default async function DashboardPage() {
                         <input type="text" required id="tel" name="tel" placeholder="tel"
                         className="bg-white border-2 border-grey-200 rounded w-auto p-2 text-grey-700 focus:outline-none focus:border-blue-400"
                         />
-
                     </div>
+
+                    <div className="flex items-center w-1/2 my-2">
+                    <label className="w-auto block text-grey-700 pr-4" htmlFor="day">Day</label>
+                    <input type="text" required id="day" name="day" placeholder="Day"
+                    className="bg-white border-2 border-grey-200 rounded w-full p-2 text-grey-700 focus:outline-none focus:border-blue-400"
+                    />
+                    </div>
+
+                    <div className="flex items-center w-1/2 my-2">
+                    <label className="w-auto block text-grey-700 pr-4" htmlFor="open">Open Time</label>
+                    <input type="time" required id="open" name="open" 
+                    className="bg-white border-2 border-grey-200 rounded w-full p-2 text-grey-700 focus:outline-none focus:border-blue-400"
+                    />
+                    </div>
+
+                    <div className="flex items-center w-1/2 my-2">
+                    <label className="w-auto block text-grey-700 pr-4" htmlFor="close">Close Time</label>
+                    <input type="time" required id="close" name="close" 
+                    className="bg-white border-2 border-grey-200 rounded w-full p-2 text-grey-700 focus:outline-none focus:border-blue-400"
+                    />
+                    </div>
+
+
                    
                     <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white p-2 rounded">Add New Massage Shop</button>
                 </form>
