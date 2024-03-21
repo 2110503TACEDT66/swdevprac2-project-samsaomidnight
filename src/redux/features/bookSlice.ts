@@ -1,32 +1,33 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { BookingItem } from "../../../interfaces";
+import { BookState, MassageShop, BookingItem } from "../../../interfaces";
 
-type BookState = {
-    bookItems: BookingItem[];
+const initialState: BookState = {
+  bookItems: [],
+  massageShops: [], // Assuming this would be fetched from the backend or statically defined
+  maxReservationsPerUser: 3,
 };
 
-const initialState: BookState = { bookItems: [] };
-
 export const bookSlice = createSlice({
-    name: "cart",
-    initialState,
-    reducers: {
-        addBooking: (state, action: PayloadAction<BookingItem>) => {
-            const existingBookingIndex = state.bookItems.findIndex(booking => booking.id === action.payload.id);
-            if (existingBookingIndex !== -1) {
-                // If booking with the same id already exists, replace it
-                state.bookItems[existingBookingIndex] = action.payload;
-            } else {
-                // Otherwise, add the new booking
-                state.bookItems.push(action.payload);
-            }
-        },
-        removeBooking: (state, action: PayloadAction<string>) => {
-            // Filter out the booking with the provided id
-            state.bookItems = state.bookItems.filter(booking => booking.id !== action.payload);
-        },
+  name: "book",
+  initialState,
+  reducers: {
+    setMassageShops: (state, action: PayloadAction<MassageShop[]>) => {
+      state.massageShops = action.payload;
     },
+    addBooking: (state, action: PayloadAction<BookingItem>) => {
+      const userReservations = state.bookItems.filter(booking => booking.userId === action.payload.userId);
+      if (userReservations.length < state.maxReservationsPerUser) {
+        state.bookItems.push(action.payload);
+      } else {
+        // Handle the case where the user already has the maximum number of reservations
+        console.warn("User has reached the maximum number of reservations.");
+      }
+    },
+    removeBooking: (state, action: PayloadAction<string>) => {
+      state.bookItems = state.bookItems.filter(booking => booking.id !== action.payload);
+    },
+  },
 });
 
-export const { addBooking, removeBooking } = bookSlice.actions;
+export const { setMassageShops, addBooking, removeBooking } = bookSlice.actions;
 export default bookSlice.reducer;
