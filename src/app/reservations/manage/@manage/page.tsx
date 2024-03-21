@@ -1,7 +1,7 @@
 export default function ManagePage() {
     return (
         <main>
-            <div>Your Reservations</div>
+            <div>Your Appointments</div>
         </main>
     )
 }
