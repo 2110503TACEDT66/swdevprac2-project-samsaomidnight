@@ -1,8 +1,8 @@
-export interface BookingItem {
-    bookDate: string
-    id: string
-    massage: string
-}
+// export interface BookingItem {
+//     bookDate: string
+//     id: string
+//     massage: string
+// }
 
 // export interface ReservationItem {
 //     carId: string
@@ -20,8 +20,10 @@ export interface OpenCloseTime {
     close: string;
   }
   
-  export interface MassageShop {
+  export interface MassageItem {
+    _id: string;
     name: string;
+    picture : string
     address: string;
     tel?: string; // Optional since it's not marked as required
     open_close_times: OpenCloseTime[];
@@ -37,7 +39,13 @@ export interface OpenCloseTime {
   
   export interface BookState {
     bookItems: BookingItem[];
-    massageShops: MassageShop[];
+    massageShops: MassageItem[];
     maxReservationsPerUser: number;
   }
   
+  export interface MassageJson {
+    success: boolean,
+    count: number,
+    pagination: Object,
+    data: MassageItem[]
+  }
