@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { BookState, MassageShop, BookingItem } from "../../../interfaces";
+import { BookState, MassageItem, BookingItem } from "../../../interfaces";
 
 const initialState: BookState = {
   bookItems: [],
@@ -11,7 +11,7 @@ export const bookSlice = createSlice({
   name: "book",
   initialState,
   reducers: {
-    setMassageShops: (state, action: PayloadAction<MassageShop[]>) => {
+    setMassageShops: (state, action: PayloadAction<MassageItem[]>) => {
       state.massageShops = action.payload;
     },
     addBooking: (state, action: PayloadAction<BookingItem>) => {
