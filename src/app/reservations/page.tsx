@@ -1,58 +1,80 @@
-'use client'
-import LocationDateReserve from "@/components/LocationDateReserve"; 
-import dayjs, { Dayjs } from "dayjs";
-import { useSearchParams } from "next/navigation";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/redux/store";
-import { BookingItem } from "../../../interfaces";
-import { addBooking } from "@/redux/features/bookSlice";
+'use client';
 
-export default function Reservations () {
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '@/redux/store';
+import { BookingItem, MassageItem } from '../../../interfaces';
+import { addBooking } from '@/redux/features/bookSlice';
+import { TextField, MenuItem, Select, FormControl, InputLabel, Button } from '@mui/material';
+import { LocalizationProvider, DateTimePicker } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs, { Dayjs } from 'dayjs';
+import { useSearchParams } from 'next/navigation';
 
-    const urlParams = useSearchParams()
-    const mid = urlParams.get('id')
-    const name = urlParams.get('name')
+export default function Reservations() {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [appointmentDate, setAppointmentDate] = useState<Dayjs | null>(null);
+  const [massageShop, setMassageShop] = useState('');
+  const [massageShops, setMassageShops] = useState<MassageItem[]>([]); // This should be fetched from the backend
 
-    const dispatch = useDispatch<AppDispatch>()
+  const dispatch = useDispatch<AppDispatch>();
+  const urlParams = useSearchParams();
+  const userId = 'user-id'; // This should be dynamically obtained from your user authentication system
 
-    const makeReservation = () => {
-        if(mid && name && pickupDate && returnDate) {
-            const item:BookingItem = {
-                id: mid,
-                massageName: name,
-                numOfDays: returnDate.diff(pickupDate, 'day'),
-                pickupDate: dayjs(pickupDate).format("YYYY/MM/DD"),
-                pickupLocation: pickupLocation,
-                returnDate: dayjs(returnDate).format("YYYY/MM/DD"),
-                returnLocation: returnLocation
-            }
-            dispatch(addBooking(item))
-        }
+  // Simulate fetching massage shops from a backend
+  useEffect(() => {
+    // fetchMassageShops().then(data => setMassageShops(data));
+    // Placeholder data
+    setMassageShops([
+      { _id: 'shop1', name: 'Relaxation Haven', picture: '', address: '', open_close_times: [] },
+      { _id: 'shop2', name: 'Serenity Now', picture: '', address: '', open_close_times: [] },
+    ]);
+  }, []);
+
+  const makeReservation = () => {
+    if (firstName && lastName && appointmentDate && massageShop) {
+      const bookingItem: BookingItem = {
+        id: 'unique-booking-id', // This ID should be generated or obtained appropriately
+        massage: `${firstName} ${lastName}`, // Assuming you want to store the name in the massage field
+        userId: userId,
+        shopId: massageShop,
+        date: appointmentDate.format('YYYY-MM-DDTHH:mm:ssZ'),
+      };
+      dispatch(addBooking(bookingItem));
     }
+  };
 
-    const [pickupDate, setPickupDate] = useState<Dayjs | null>(null)
-    const [pickupLocation, setPickupLocation] = useState<string>('BKK')
-    const [returnDate, setReturnDate] = useState<Dayjs | null>(null)
-    const [returnLocation, setReturnLocation] = useState<string>('BKK')
-
-    return (
-        <main className="w-[100%] flex flex-col items-center space-y-4"> 
-            <div className="text-xl font-medium">New Appointment</div>
-            <div className="text-xl font-medium"> Massage {name} </div>
-            <div className="w-fit space-y-2">
-                <div className="text-md text-left text-gray-600">Pick-Up Date and Location</div>
-                <LocationDateReserve onDateChange={(value:Dayjs) => {setPickupDate(value)}}
-                onLocationChange={(value:string) => setPickupLocation(value)}/>
-                <div className="text-md text-left text-gray-600"> Return Date and Location</div>
-                <LocationDateReserve onDateChange={(value:Dayjs) => {setReturnDate(value)}}
-                onLocationChange={(value:string) => setReturnLocation(value)}/>
-            </div>
-            <button className="block rounded-md bg-sky-600 hover:bg-indigo-600 px-3 py-2 shadow-sm text-white"
-            onClick={makeReservation}>
-                Make an Appointment
-            </button>            
-        </main>
-    );
+  return (
+    <main className="w-full flex flex-col items-center space-y-4">
+      <div className="text-xl font-medium">New Massage Appointment</div>
+      <TextField label="First Name" variant="outlined" value={firstName} onChange={(e) => setFirstName(e.target.value)} className="w-full max-w-xs" />
+      <TextField label="Last Name" variant="outlined" value={lastName} onChange={(e) => setLastName(e.target.value)} className="w-full max-w-xs" />
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DateTimePicker
+          renderInput={(props) => <TextField {...props} />}
+          label="Appointment Date/Time"
+          value={appointmentDate}
+          onChange={setAppointmentDate}
+        />
+      </LocalizationProvider>
+      <FormControl fullWidth>
+        <InputLabel id="massage-shop-label">Massage Shop</InputLabel>
+        <Select
+          labelId="massage-shop-label"
+          id="massage-shop"
+          value={massageShop}
+          label="Massage Shop"
+          onChange={(e) => setMassageShop(e.target.value)}
+        >
+          {massageShops.map((shop) => (
+            <MenuItem key={shop._id} value={shop._id}>{shop.name}</MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      <Button variant="contained" color="primary" onClick={makeReservation}>
+        Make an Appointment
+      </Button>
+    </main>
+  );
 }
-
