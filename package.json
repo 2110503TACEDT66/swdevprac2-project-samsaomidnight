@@ -11,11 +11,13 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
+    "@date-io/dayjs": "^3.0.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
-    "@mui/material": "^5.15.12",
-    "@mui/x-date-pickers": "^6.19.6",
+    "@mui/material": "^5.15.14",
+    "@mui/x-date-pickers": "^6.19.8",
     "@reduxjs/toolkit": "^1.9.7",
+    "axios": "^1.6.8",
     "dayjs": "^1.11.10",
     "mongoose": "^7.6.3",
     "next": "14.1.3",
