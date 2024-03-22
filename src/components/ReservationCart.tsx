@@ -17,9 +17,9 @@ export default function BookingList() {
             ) : (
                 bookItems.map((bookingItem)=>(
                     <div className="bg-slate-200 rounded px-5 mx-5 py-2 my-2" key={bookingItem.id}>
-                        <div className="text-md">Book Date: {bookingItem.bookDate}</div>
-                        <div className="text-md">id: {bookingItem.id}</div>
-                        <div className="text-md">Massage Shop: {bookingItem.massage}</div>
+                        <div className="text-md">User Name: {bookingItem.userName}</div>
+                        <div className="text-md">Massage shop: {bookingItem.massage}</div>
+                        <div className="text-md">Reservation Date: {bookingItem.reserveDate}</div>
                     
                         <button className="block rounded-md bg-sky-600 hover:bg-indigo-600 px-3 py-2 shadow-sm text-white"
                         onClick={()=>dispatch(removeBooking(bookingItem.id))}>

@@ -8,7 +8,7 @@ const initialState: BookState = {
 };
 
 export const bookSlice = createSlice({
-  name: "book",
+  name: "cart",
   initialState,
   reducers: {
     setMassageShops: (state, action: PayloadAction<MassageItem[]>) => {

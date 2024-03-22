@@ -31,10 +31,9 @@ export interface OpenCloseTime {
   
   
   export interface BookingItem {
-    id: string;
-    userId: string;
-    shopId: string;
-    date: string;
+    userName: string;
+    massage: string;
+    reserveDate: string; // reserve date
   }
   
   export interface BookState {
