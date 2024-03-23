@@ -15,9 +15,10 @@ export default async function TopMenu(){
             className={styles.logoimg}
             alt='logo' width={0} height={0} sizes="100vh"/>
             <TopMenuItem title='Select Massage Shop' pageRef='/massage'/>
-            <TopMenuItem title='Reservations' pageRef='/reservations'/>
+            {/* <TopMenuItem title='Reservations' pageRef='/reservations'/> */}
             <TopMenuItem title='About' pageRef='/about'/>
             <div className='flex flex-row absolute right-0 h-full'>
+            <TopMenuItem title='Manage' pageRef='/reservations/manage'/>
                 <TopMenuItem title='My Appointment' pageRef='/cart'/>
                 {
                     session? <Link href="/api/auth/signout">

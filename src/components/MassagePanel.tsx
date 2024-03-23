@@ -4,6 +4,7 @@ import ProductCard from "@/components/ProductCard";
 import Link from "next/link";
 import { useRef, useEffect } from "react";
 import getMassages from "@/libs/getMassages";
+import { MassageItem } from "../../interfaces";
 
 export default function MassagePanel() {
 
@@ -39,8 +40,8 @@ export default function MassagePanel() {
         <div>
             <div style={{margin:"20px", display:"flex", flexDirection:"row", flexWrap:"wrap", justifyContent: "space-around", alignContent:"space-around"}}>
                 {
-                    massageResponse.data.map((massageItem:Object)=>(
-                        <Link href={`/car/${massageItem.id}`} className="w-1/5">
+                    massageResponse.data.map((massageItem:MassageItem)=>(
+                        <Link href={`/car/${massageItem._id}`} className="w-1/5">
                         <ProductCard massageName={massageItem.name} imgSrc={massageItem.picture}
                         onCompare={ (massage:string)=>dispatchCompare({type:'add', massageName:massage}) } />
                         </Link>
