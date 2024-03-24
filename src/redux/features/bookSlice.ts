@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { BookState, MassageItem, BookingItem } from "../../../interfaces";
+import { v4 as uuidv4 } from 'uuid';
 
 const initialState: BookState = {
   bookItems: [],
@@ -16,10 +17,16 @@ export const bookSlice = createSlice({
     },
     addBooking: (state, action: PayloadAction<BookingItem>) => {
       const userReservations = state.bookItems.filter(booking => booking.userId === action.payload.userId);
+    
       if (userReservations.length < state.maxReservationsPerUser) {
-        state.bookItems.push(action.payload);
+        // Assign a unique ID to each new booking
+        const newBooking = {
+          ...action.payload,
+          id: uuidv4(), // Generate a unique ID for the booking
+        };
+        state.bookItems.push(newBooking);
       } else {
-        // Handle the case where the user already has the maximum number of reservations
+        alert('"User has reached the maximum number of reservations."')
         console.warn("User has reached the maximum number of reservations.");
       }
     },

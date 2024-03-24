@@ -1,6 +1,6 @@
 import NextAuth from "next-auth/next";
 import { AuthOptions } from "next-auth";
-import userLogin from "@/libs/userLogIn";
+import userLogIn from "@/libs/userLogIn";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export const authOptions: AuthOptions = {
@@ -20,7 +20,7 @@ export const authOptions: AuthOptions = {
         // Add logic here to look up the user from the credentials supplied
         if(!credentials) return null
 
-        const user = await userLogin(credentials.email, credentials.password)
+        const user = await userLogIn(credentials.email, credentials.password)
 
         if (user) {
           // Any object returned will be saved in `user` property of the JWT

@@ -35,9 +35,9 @@ export default function Reservations () {
     return (
         <main className="w-[100%] flex flex-col items-center space-y-4"> 
             <div className="text-xl font-medium">New Reservation</div>
-            <div className="text-xl font-medium"> Massage Shop: {name} </div>
-            <div className="w-fit space-y-2">
-              <TextField name="name" label="name" variant="outlined" onChange={(e) => setUserName(e.target.value)} />
+            <div className="text-xl font-medium text-cyan-300"> Massage Shop: {name} </div>
+            <div className="w-fit space-y-2  text-cyan-300">
+              <TextField name="name" label="name" variant="outlined" onChange={(e) => setUserName(e.target.value) } />
               <div className="text-md text-left text-gray-600">Reserve Date</div>
               <LocationDateReserve onDateChange={(value:Dayjs) => {setReserveDate(value)}} />
             </div>
