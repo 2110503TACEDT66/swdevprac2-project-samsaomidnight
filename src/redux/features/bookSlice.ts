@@ -16,25 +16,43 @@ export const bookSlice = createSlice({
       state.massageShops = action.payload;
     },
     addBooking: (state, action: PayloadAction<BookingItem>) => {
-      const userReservations = state.bookItems.filter(booking => booking.userId === action.payload.userId);
-    
+      const userReservations = state.bookItems.filter(booking => booking.userName === action.payload.userName);
+
       if (userReservations.length < state.maxReservationsPerUser) {
         // Assign a unique ID to each new booking
         const newBooking = {
           ...action.payload,
-          id: uuidv4(), // Generate a unique ID for the booking
+          id: uuidv4(), // Ensure a unique ID is assigned
         };
         state.bookItems.push(newBooking);
+        
+    // Log the total number of reservations for the user, including the new booking
+    console.log(`Total reservations for user ${action.payload.userName}: ${userReservations.length + 1}`);
       } else {
-        alert('"User has reached the maximum number of reservations."')
+        alert("User has reached the maximum number of reservations.");
         console.warn("User has reached the maximum number of reservations.");
       }
     },
+
     removeBooking: (state, action: PayloadAction<string>) => {
       state.bookItems = state.bookItems.filter(booking => booking.id !== action.payload);
     },
+    
+    editBooking: (state, action: PayloadAction<BookingItem>) => {
+      const index = state.bookItems.findIndex(booking => booking.id === action.payload.id);
+      if (index !== -1) {
+        // Check if the current user is allowed to edit the booking
+        if (state.currentUserId === state.bookItems[index].userId || state.currentUserRole === 'admin') {
+          state.bookItems[index] = { ...state.bookItems[index], ...action.payload };
+          console.log(`Booking updated: ${action.payload.id}`);
+        } else {
+          console.warn("Not authorized to edit this booking.");
+        }
+      }
+    },
+    
   },
 });
 
-export const { setMassageShops, addBooking, removeBooking } = bookSlice.actions;
+export const { setMassageShops, addBooking, removeBooking, editBooking } = bookSlice.actions;
 export default bookSlice.reducer;

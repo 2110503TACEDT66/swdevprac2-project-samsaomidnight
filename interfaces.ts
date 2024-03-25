@@ -42,8 +42,9 @@ export interface OpenCloseTime {
     bookItems: BookingItem[];
     massageShops: MassageItem[];
     maxReservationsPerUser: number;
+    currentUserRole: 'admin' | 'user';
+    currentUserId: string; // Assuming you have a way to identify the current user
   }
-  
   export interface MassageJson {
     success: boolean,
     count: number,
