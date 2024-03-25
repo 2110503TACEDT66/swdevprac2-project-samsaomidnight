@@ -15,31 +15,38 @@ export default async function TopMenu(){
 
 
     return (
-        <div className={styles.menucontainer}>
-            <Image src={'/img/massage-logo2.png'}
-            className={styles.logoimg}
-            alt='logo' width={0} height={0} sizes="100vh"/>
-            <TopMenuItem title='Select Massage Shop' pageRef='/massage'/>
-            {/* <TopMenuItem title='Reservations' pageRef='/reservations'/> */}
-            <TopMenuItem title='About' pageRef='/about'/>
-            <div className='flex flex-row absolute right-0 h-full'>
-            <TopMenuItem title='Manage' pageRef='/reservations/manage'/>
-            <TopMenuItem title='My Appointment' pageRef='/cart'/>
-            <TopMenuItem title='Register' pageRef='/register'/>
+        <nav className="backdrop-blur-md bg-opacity-30 bg-black text-white w-full fixed top-0 z-50">
+            <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 font-sans text-white">
+                <div className="flex justify-between h-16 text-white">
+                    <div className="flex text-white">
+                        <div className="absolute left-4 top-2 flex items-center text-white">
+                            <Image src={'/img/massage-logo1.png'} alt='logo' width={45} height={50} layout='fixed' />
+                        </div>
+                        <div className="hidden md:flex space-x-10 text-white">
+                            <TopMenuItem title='Select Massage Shop' pageRef='/massage'/>
+                            <TopMenuItem title='About' pageRef='/about'/>
+                        </div>
+                    </div>
+                    <div className="flex items-center space-x-4 text-white">
+                        <TopMenuItem title='Manage' pageRef='/reservations/manage'/>
+                        <TopMenuItem title='My Appointment' pageRef='/cart'/>
+                        <TopMenuItem title='Register' pageRef='/register'/>
+
                 {
                     session? <Link href="/api/auth/signout">
-                        <div className='flex items-center h-full px-2 text-cyan-600 text-sm'>
-                             Sign-Out {/*of {session.user?.name} */}
+                        <div className='absolute right-4 top-3 cursor-pointer text-white px-4 py-2 hover:underline'>
+                             Sign-Out 
                         </div>
                     </Link>
                     : <Link href="/api/auth/signin">
-                        <div className='flex items-center h-full px-2 text-cyan-600 text-sm'>
+                        <div className='px-3 py-2 rounded-md text-sm font-medium cursor-pointer hover:bg-opacity-50'>
                             Sign-In
                         </div>
                     </Link>
                 }
             </div>
-        </div>
-
+                </div>
+            </div>
+        </nav>
     );
 }

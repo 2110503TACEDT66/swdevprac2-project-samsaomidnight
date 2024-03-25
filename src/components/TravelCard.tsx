@@ -6,13 +6,20 @@ export function TravelCard() {
     const [playing, setPlaying] = useState(true)
 
     return (
-        <div className="w-[80%] shadow-lg mx-[10%] my-10 p-2 rounded-lg bg-gray-200 flex flex-row">
-            <VlogPlayer isPlaying={playing} vdoSrc="/video/massageThump.mp4"></VlogPlayer>
-            <div className="m-5">
-                Massage Shop
-                <button className="block rounded-md bg-sky-600 hover:bg-indigo-600 px-3 py-2 shadow-sm text-white"
-                onClick={()=>setPlaying(!playing)}>
-                    {playing? 'Pause':'Play'}
+        <div className={`w-[80%] mx-auto my-10 p-6 rounded-lg shadow-2xl flex flex-row items-center transition-all duration-300 ease-in-out
+            bg-gradient-to-r from-yellow-700 via-yellow-600 to-yellow-500 bg-opacity-90 hover:bg-opacity-100`}>
+            <VlogPlayer isPlaying={playing} vdoSrc="/video/massageThump.mp4" />
+            <div className="ml-10 flex flex-col justify-between">
+                <h2 className="text-4xl font-serif font-semibold text-gray-100 mb-4">Exclusive Massage Shop</h2>
+                <p className="text-gray-200 text-lg mb-6">Indulge in the ultimate relaxation experience crafted for your well-being.</p>
+                
+                <button
+                    className={`text-lg font-serif font-semibold px-6 py-3 rounded-lg shadow-md 
+                    ${playing ? 'bg-yellow-800 hover:bg-yellow-700' : 'bg-yellow-700 hover:bg-yellow-600'} 
+                    text-white transition-colors duration-300 ease-in-out`}
+                    onClick={() => setPlaying(!playing)}
+                >
+                    {playing ? 'Pause' : 'Play'}
                 </button>
             </div>
         </div>

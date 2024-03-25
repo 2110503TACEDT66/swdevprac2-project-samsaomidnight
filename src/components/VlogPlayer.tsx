@@ -17,6 +17,6 @@ export function VlogPlayer(
         }, [isPlaying])
 
         return (
-            <video className="w-[40%]" src={vdoSrc} ref={vdoRef} muted loop controls/>
+            <video className="w-[40%] flex-none w-1/2 rounded-lg overflow-hidden shadow-lg" src={vdoSrc} ref={vdoRef} loop controls/>
         )
     }
