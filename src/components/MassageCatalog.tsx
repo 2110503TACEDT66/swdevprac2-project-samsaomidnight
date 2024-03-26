@@ -1,12 +1,15 @@
 import Link from "next/link";
 import ProductCard from "./ProductCard";
+
 import { MassageItem, MassageJson } from "../../interfaces";
 
 export default async function MassageCatalog({massageJson}:{massageJson:MassageJson}) {
     const massageJsonReady = await massageJson
     return (
         <>
-            Explore {massageJsonReady.count} massage shop in our catalog
+        <div className="font-serif font-lg">
+            Explore {massageJsonReady.count} massage shops in our catalog
+            </div>
             <div style={{margin:"20px", display:"flex", flexDirection:"row", flexWrap:"wrap", justifyContent: "space-around", alignContent:"space-around"}}>
                 {
                     massageJsonReady.data.map((massageItem: MassageItem)=>(
@@ -15,9 +18,11 @@ export default async function MassageCatalog({massageJson}:{massageJson:MassageJ
                         <ProductCard massageName={massageItem.name} imgSrc={massageItem.picture}/>
                         </Link>
                         )
-                    )
+                    ) 
                 }
-            </div> 
+             
+            </div>
         </>
     )
 }
+
