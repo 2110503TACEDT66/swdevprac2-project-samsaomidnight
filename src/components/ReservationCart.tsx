@@ -26,7 +26,7 @@ export default function BookingList() {
   const renderBookingItems = () => {
     // Filter bookings based on user role and name
     const filteredBookItems = profile?.data?.role !== "admin" ?
-      bookItems.filter((item) => item.userName === profile.data.name) :
+      bookItems.filter((item:any) => item.userName === profile.data.name) :
       bookItems;
     console.log(filteredBookItems);
     return filteredBookItems.length === 0 ? (
@@ -39,7 +39,14 @@ export default function BookingList() {
           <div className="text-md">Reservation Date: {bookingItem.reserveDate}</div>
           <button
             className="block rounded-md bg-sky-600 hover:bg-indigo-600 px-3 py-2 shadow-sm text-white"
-            onClick={() => dispatch(removeBooking(bookingItem.id))}
+            onClick={async () => {
+              dispatch(removeBooking(bookingItem.id));
+              await fetch(`/api/appointments/${bookingItem.id}`,{method:"DELETE"})
+              .then(res=>res.json())
+              .then((data)=>{
+                console.log(data)
+              })
+            }}
           >
             Remove Booking
           </button>

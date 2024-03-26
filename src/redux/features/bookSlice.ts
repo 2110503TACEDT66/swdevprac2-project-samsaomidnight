@@ -17,21 +17,25 @@ export const bookSlice = createSlice({
     },
     addBooking: (state, action: PayloadAction<BookingItem>) => {
       const userReservations = state.bookItems.filter(booking => booking.userName === action.payload.userName);
-
-      if (userReservations.length < state.maxReservationsPerUser) {
-        // Assign a unique ID to each new booking
-        const newBooking = {
-          ...action.payload,
-          id: uuidv4(), // Ensure a unique ID is assigned
-        };
-        state.bookItems.push(newBooking);
+      const newBooking = {
+        ...action.payload,
+        id: uuidv4(), // Ensure a unique ID is assigned
+      };
+      state.bookItems.push(newBooking);
+    //   if (userReservations.length < state.maxReservationsPerUser) {
+    //     // Assign a unique ID to each new booking
+    //     const newBooking = {
+    //       ...action.payload,
+    //       id: uuidv4(), // Ensure a unique ID is assigned
+    //     };
+    //     state.bookItems.push(newBooking);
         
-    // Log the total number of reservations for the user, including the new booking
-    console.log(`Total reservations for user ${action.payload.userName}: ${userReservations.length + 1}`);
-      } else {
-        alert("User has reached the maximum number of reservations.");
-        console.warn("User has reached the maximum number of reservations.");
-      }
+    // // Log the total number of reservations for the user, including the new booking
+    // console.log(`Total reservations for user ${action.payload.userName}: ${userReservations.length + 1}`);
+    //   } else {
+    //     alert("User has reached the maximum number of reservations.");
+    //     console.warn("User has reached the maximum number of reservations.");
+    //   }
     },
 
     removeBooking: (state, action: PayloadAction<string>) => {

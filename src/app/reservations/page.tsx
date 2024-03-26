@@ -10,6 +10,7 @@ import { TextField } from "@mui/material";
 import getUserProfile from "@/libs/getUserProfile";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
+import { POST } from "../api/appointments/route";
 
 export default function Reservations () {
 
@@ -17,7 +18,7 @@ export default function Reservations () {
     const mid = urlParams.get('id')
     const name = urlParams.get('name')
     const { data: session } = useSession();
-    const [profile, setProfile] = useState(null);
+    const [profile, setProfile] = useState<{ data?: { name?: string } }>({ data: {} });
 
     useEffect(() => {
     const fetchData = async () => {
@@ -31,15 +32,30 @@ export default function Reservations () {
   }, [session?.user?.token]); // Dependency on session token
     const dispatch = useDispatch<AppDispatch>()
 
-    const makeBooking = () => {
-        if(reserveDate && name) {
-            const item:BookingItem = {
-                userName: profile.data.name,
-                massage: name,
-                reserveDate: dayjs(reserveDate).format("YYYY/MM/DD")
-            }
-            dispatch(addBooking(item))
-            console.log(item)
+    const makeBooking = async () => {
+      if (session?.user.token) {
+          const user = await getUserProfile(session.user.token);
+          setProfile(user)
+          if(reserveDate && name) {
+              const item:BookingItem = {
+                  userName: profile.data.name,
+                  massage: name,
+                  reserveDate: dayjs(reserveDate).format("YYYY-MM-DD")
+              }
+              await fetch(`/api/appointments`, {
+                method: "POST",
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  user: profile.data._id,
+                  massage: mid,
+                  apptDate: item.reserveDate
+                })
+              })
+              dispatch(addBooking(item))
+              // console.log(item)
+          }
         }
         
     }
@@ -50,6 +66,7 @@ export default function Reservations () {
 
     return (
         <main className="w-[100%] flex flex-col items-center space-y-4"> 
+          <div className="text-xl text-white">{session?.user.name}</div>
             <div className="text-xl font-medium">New Reservation</div>
             <div className="text-xl font-medium text-cyan-300"> Massage Shop: {name} </div>
             <div className="w-fit space-y-2  text-cyan-300">
