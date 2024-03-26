@@ -1,4 +1,5 @@
 'use client'
+
 import LocationDateReserve from "@/components/LocationDateReserve"; 
 import dayjs, { Dayjs } from "dayjs";
 import { useSearchParams } from "next/navigation";
@@ -70,17 +71,16 @@ export default function Reservations () {
 
 
     return (
-        <main className="w-[100%] flex flex-col items-center space-y-4"> 
-          <div className="text-xl text-white">{session?.user.name}</div>
-            <div className="text-xl font-medium">New Reservation</div>
-            <div className="text-xl font-medium text-cyan-300"> Massage Shop: {name} </div>
-            <div className="w-fit space-y-2  text-cyan-300">
+        <main className="w-full flex flex-col items-center space-y-4"> 
+          <div className="font-serif text-2xl text-white">{session?.user.name}</div>
+            <div className="font-serif text-2xl font-medium"><strong>New Reservation</strong></div>
+            <div className="text-2xl font-medium font-serif text-yellow-600"> Massage Shop: {name} </div>
+            <div className="w-fit space-y-2 font-serif">
               {/* <TextField name="name" label="name" variant="outlined" onChange={(e) => setUserName(e.target.value) } /> */}
-              <div className="text-md text-left text-gray-600">Reserve Date</div>
+              <div className="text-lg text-left font-serif text-gray-600">Reserve Date</div>
               <LocationDateReserve onDateChange={(value:Dayjs) => {setReserveDate(value)}} />
             </div>
-            <button className="block rounded-md bg-sky-600 hover:bg-indigo-600 px-3 py-2 shadow-sm text-white"
-            onClick={() => makeBooking()}>
+            <button className="text-black bg-gradient-to-r from-yellow-500 via-yellow-300 to-yellow-200 bg-opacity-90 transition-colors ease-in-out font-serif  py-2 px-8 rounded-3xl  hover:bg-gradient-to-r from-yellow-600 via-yellow-500 to-yellow-300 bg-opacity-90 transition-colors duration-300 ease-in-out">
                 Reserve this Massage Shop
             </button>            
         </main>

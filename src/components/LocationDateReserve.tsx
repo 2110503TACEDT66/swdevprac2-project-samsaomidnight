@@ -11,7 +11,8 @@ export default function LocationDateReserve({onDateChange} :{onDateChange:Functi
     const [reserveDate, setReserveDate] = useState<Dayjs | null>(null)
 
     return (
-        <div className="bg-slate-100 rounded-lg space-x-5 space-y-2 w-fit px-10 py-5 flex flex-row justify-center">
+        <div className=" bg-gradient-to-r from-slate-400 via-slate-150 to-slate-200 bg-opacity-90
+        rounded-sm space-x-5 space-y-2 w-fit px-2 py-2 flex flex-row justify-center">
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker className="bg-white"
                 value={reserveDate}
