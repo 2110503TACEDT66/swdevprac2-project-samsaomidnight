@@ -28,7 +28,7 @@ export default function RegisterPage() {
 
     return (
         <main className="flex items-center justify-center bg-white py-20 ">
-            <div className="max-w-lg w-full space-y-8 bg-stone-400 p-10 rounded-xl shadow-2xl">
+            <div className="max-w-lg w-full space-y-8 bg-stone-400 p-10 rounded-lg shadow-2xl">
                 <h2 className="text-center text-4xl font-serif font-extrabold text-white">Register</h2>
                 <form action={addUser}>
                     <div className="rounded-md -space-y-px">
@@ -57,13 +57,16 @@ export default function RegisterPage() {
                             <input type="password" name="password" id="password" required placeholder="Create a password"
                                    className="appearance-none relative block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
                         </div>
-                    </div>
-                    <div>
+
+
+                        <div className="py-3">
                         <button type="submit"
-                                className="group relative w-full flex justify-center py-2 px-4 border border-transparent font-serif text-m font-large rounded-md text-gray-500 font-bold bg-amber-100 hover:bg-amber-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
+                                className="w-[100%] text-lg text-black bg-white font-serif  py-2 px-20 rounded-3xl  hover:bg-gradient-to-r from-yellow-600 via-yellow-500 to-yellow-300 bg-opacity-90 transition-colors duration-300 ease-in-out ">
                             Register
                         </button>
+                        </div>
                     </div>
+                    
                 </form>
             </div>
         </main>

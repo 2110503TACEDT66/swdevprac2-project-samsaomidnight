@@ -13,6 +13,7 @@ export default function ProductCard({massageName, imgSrc, onCompare}:{massageNam
                 className='object-cover rounded-t-lg' />
             </div>
             <div className='w-full h-[15%] p-[10px]'>{massageName}</div>
+            
             {
                 onCompare? <button className='block text-sm h-[10%] rounded-md bg-sky-600 hover:bg-indigo-600 mx-2 px-1 py-1 shadow-sm text-white' 
                 onClick={(e)=>{e.stopPropagation(); e.preventDefault(); onCompare(massageName)}}>

@@ -43,8 +43,8 @@ export default async function DashboardPage() {
     var createdAt = new Date(profile.data.createdAt)
 
     return (
-        <main className="bg-slate-100 m-5 p-5 font-serif rounded-lg shadow">
-    <div className="text-xl font-bold text-gray-800 mb-4">{profile.data.name}</div>
+        <main className="bg-stone-400 m-5 p-5 rounded-lg shadow">
+    <div className="text-xl font-medium text-gray-800 font-serif mb-4">{profile.data.name}</div>
     <div className="overflow-hidden bg-white rounded-lg shadow mb-6">
       <table className="min-w-full leading-normal">
         <tbody>
@@ -58,7 +58,7 @@ export default async function DashboardPage() {
             {
                 (profile.data.role=="admin")?
                 <form action={addMassage} className="bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-xl font-semibold text-blue-600 mb-6">Create Massage Shop</h2>
+        <h2 className="text-xl font-semibold text-black mb-6">Create Massage Shop</h2>
         <div className="grid grid-cols-1 gap-6 mb-6">
           <label className="block">
             <span className="text-gray-700">Name</span>
@@ -104,7 +104,7 @@ export default async function DashboardPage() {
         </div>
         
         <button type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-150 ease-in-out">
+                className="w-[100%] text-lg text-black bg-gradient-to-r from-yellow-500 via-yellow-300 to-yellow-200 bg-opacity-90 transition-colors ease-in-out font-serif  py-2 px-20 rounded-3xl  hover:bg-gradient-to-r from-yellow-600 via-yellow-500 to-yellow-300 bg-opacity-90 transition-colors duration-300 ease-in-out">
           Add New Massage Shop
         </button>
       </form>: null

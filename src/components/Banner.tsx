@@ -17,7 +17,7 @@ export default function Banner(){
     const { data: session } = useSession();
 
     // Initialize `profile` with an object that has an empty `data` object.
-    const [profile, setProfile] = useState<{ data?: { name?: string } }>({ data: {} });
+    const [profile, setProfile] = useState<{ data?: { name?: string }}>({ data: {} });
   
     useEffect(() => {
       async function fetchProfile() {
@@ -48,18 +48,20 @@ export default function Banner(){
                 className='object-cover'
                 />
                 <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center p-8">
-                    <h1 className='text-6xl text-white font-serif font-light mb-4'>Escape. Recharge. Revitalize.</h1>
-                    <h3 className='text-2xl text-white font-serif mb-8'>Find serenity, heal your body, renew your spirit</h3>
+                <h1 className='text-6xl text-white font-serif font-bold mb-4'>Escape.</h1>
+                    <h1 className='text-6xl text-white font-serif font-bold mb-4'>Recharge.</h1>
+                    <h1 className='text-6xl text-white font-serif font-bold mb-4'>Revitalize.</h1>
+                    <h3 className='text-xl text-white font-serif mb-12'>Find serenity, heal your body, renew your spirit</h3>
 
                     {
-                    session? <div className='text-xl font-serif text-white mb-6'>
+                    session? <div className='text-xl font-serif font-thin text-white mb-12'>
                         Welcome {profile.data.name}
                     </div>:null
                 }
 
-                    <button className='text-lg text-cyan-600 bg-white border border-cyan-600 font-serif font-semibold py-2 px-4 rounded hover:bg-cyan-600 hover:text-white hover:border-transparent transition-colors duration-300 ease-in-out'
+                    <button className='text-lg text-black bg-white font-serif  py-2 px-20 rounded-3xl  hover:bg-gradient-to-r from-yellow-600 via-yellow-500 to-yellow-300 bg-opacity-90 transition-colors duration-300 ease-in-out'
                 onClick={(e)=>{ e.stopPropagation(); router.push('/massage') }}>
-                    Pick your perfect massage shop now
+                    Discover now
                 </button>
 
 
@@ -79,12 +81,16 @@ export default function Banner(){
                 fill={true}
                 className='object-cover'
                 />
-                <div className={styles.bannerText}>
-                    <h1 className='text-5xl font-bold font-serif font-bold'>Escape. Recharge. Revitalize.</h1>
-                    <h3 className='text-xl font-serif p-4'>Find serenity, heal your body, renew your spirit</h3>
-                    <button className='font-serif bg-white text-cyan-600 border border-cyan-600 font-semibold py-2 px-2 m-2 rounded hover:bg-cyan-600 hover:text-white hover:border-transparent'
+               <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center p-8">
+               <h1 className='text-6xl text-white font-serif font-bold mb-4'>Escape.</h1>
+                    <h1 className='text-6xl text-white font-serif font-bold mb-4'>Recharge.</h1>
+                    <h1 className='text-6xl text-white font-serif font-bold mb-4'>Revitalize.</h1>
+                    <h3 className='text-xl text-white font-serif mb-12'>Find serenity, heal your body, renew your spirit</h3>
+
+               
+                    <button className='text-lg text-black bg-white font-serif  py-2 px-20 rounded-3xl  hover:bg-gradient-to-r from-yellow-600 via-yellow-500 to-yellow-300 bg-opacity-90 transition-colors duration-300 ease-in-out'
                 onClick={(e)=>{ e.stopPropagation(); router.push('/massage') }}>
-                    Pick your perfect massage shop now
+                    Discover now
                 </button>
                 </div>
             </div>
