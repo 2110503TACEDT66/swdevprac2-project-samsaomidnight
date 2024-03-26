@@ -47,21 +47,26 @@ export default function Banner(){
                 fill={true}
                 className='object-cover'
                 />
-                <div className={styles.bannerText}>
-                    <h1 className='text-5xl font-bold font-serif font-bold'>Escape. Recharge. Revitalize.</h1>
-                    <h3 className='text-xl font-serif p-4'>Find serenity, heal your body, renew your spirit</h3>
-                    <button className='font-serif bg-white text-cyan-600 border border-cyan-600 font-semibold py-2 px-2 m-2 rounded hover:bg-cyan-600 hover:text-white hover:border-transparent'
-                onClick={(e)=>{ e.stopPropagation(); router.push('/massage') }}>
-                    Pick your perfect massage shop now
-                </button>
-                </div>
-    
-                {
-                    session? <div className='text-l font-serif z-30 absolute top-5 right-10 font-semibold '>
+                <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center p-8">
+                    <h1 className='text-6xl text-white font-serif font-light mb-4'>Escape. Recharge. Revitalize.</h1>
+                    <h3 className='text-2xl text-white font-serif mb-8'>Find serenity, heal your body, renew your spirit</h3>
+
+                    {
+                    session? <div className='text-xl font-serif text-white mb-6'>
                         Welcome {profile.data.name}
                     </div>:null
                 }
-                
+
+                    <button className='text-lg text-cyan-600 bg-white border border-cyan-600 font-serif font-semibold py-2 px-4 rounded hover:bg-cyan-600 hover:text-white hover:border-transparent transition-colors duration-300 ease-in-out'
+                onClick={(e)=>{ e.stopPropagation(); router.push('/massage') }}>
+                    Pick your perfect massage shop now
+                </button>
+
+
+                </div>
+    
+               
+
             </div>
         );
     }

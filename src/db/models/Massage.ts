@@ -14,6 +14,10 @@ const MassageSchema = new mongoose.Schema({
   tel : {
       type: String
   },
+  picture: {
+    type: String,
+    required: true,
+  },
   open_close_times: [{
       day: {
           type: String,
@@ -27,7 +31,7 @@ const MassageSchema = new mongoose.Schema({
           type: String,
           required: true
       }
-  }]
+  }],
 });
 
 const Massage = mongoose.models.Massage || mongoose.model("Massage", MassageSchema);

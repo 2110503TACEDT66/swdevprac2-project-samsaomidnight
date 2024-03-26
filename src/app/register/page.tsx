@@ -1,91 +1,71 @@
-'use client'
+import User from "@/db/models/User";
+import { dbConnect } from "@/db/dbConnect";
 
-import React, { useState, FormEvent, ChangeEvent } from 'react';
-import axios from 'axios';
+export default function RegisterPage() {
 
-interface FormData {
-  name: string;
-  email: string;
-  password: string;
-  role: string;
-}
+    const addUser = async (addUserForm:FormData) => {
+        "use server"
+        const name = addUserForm.get("name")
+        const email = addUserForm.get("email")
+        const tel = addUserForm.get("tel")
+        const role = addUserForm.get("role")
+        const password = addUserForm.get("password")
 
-export default function Register() {
-  const [formData, setFormData] = useState<FormData>({
-    name: '',
-    email: '',
-    password: '',
-    role: 'user',
-  });
+        try{
+            dbConnect()
+            const user = await User.create({
+                "name": name,
+                "email": email,
+                "tel": tel,
+                "role": role,
+                "password": password,
+            })
+        } catch(error){
+            console.log(error)
+        }
 
-  const onChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const endpoint = `${process.env.NEXTAUTH_URL}/api/auth/register`; // No trailing slash
-    console.log('Registering with endpoint:', endpoint); // Debugging log
-  
-    try {
-      const res = await axios.post(endpoint, formData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-  
-      console.log('Registration successful:', res.data);
-      // Handle success, e.g., redirect to the dashboard or login page
-      // window.location.href = '/dashboard'; // Example redirect after successful registration
-  
-    } catch (err: unknown) {
-      if (axios.isAxiosError(err)) {
-        console.error('Registration error:', err.response?.data || err.message);
-        // Handle error, e.g., show an error message to the user
-      } else if (err instanceof Error) {
-        console.error('Registration error:', err.message);
-      } else {
-        console.error('An unexpected error occurred during registration');
-      }
     }
-  };
 
-  
-
-  return (
-    <div>
-      <h1>Register</h1>
-      <form onSubmit={onSubmit}>
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={onChange}
-          placeholder="Name"
-          required
-        />
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={onChange}
-          placeholder="Email"
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={onChange}
-          placeholder="Password"
-          required
-        />
-        <select name="role" value={formData.role} onChange={onChange}>
-          <option value="user">User</option>
-          <option value="admin">Admin</option>
-        </select>
-        <button type="submit">Register</button>
-      </form>
-    </div>
-  );
+    return (
+        <main className="flex items-center justify-center bg-white py-20 ">
+            <div className="max-w-lg w-full space-y-8 bg-stone-400 p-10 rounded-xl shadow-2xl">
+                <h2 className="text-center text-4xl font-serif font-extrabold text-white">Register</h2>
+                <form action={addUser}>
+                    <div className="rounded-md -space-y-px">
+                        <div className="py-3">
+                            <label htmlFor="name" className="block text-sm font-medium font-serif text-amber-50">Name</label>
+                            <input type="text" name="name" id="name" required placeholder="Your full name"
+                                   className="appearance-none relative block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+                        </div>
+                        <div className="py-3">
+                            <label htmlFor="email" className="block text-sm font-medium font-serif text-amber-50">Email</label>
+                            <input type="email" name="email" id="email" required placeholder="Your email"
+                                   className="appearance-none relative block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+                        </div>
+                        <div className="py-3">
+                            <label htmlFor="tel" className="block text-sm font-medium font-serif text-amber-50">Phone Number</label>
+                            <input type="tel" name="tel" id="tel" required placeholder="Your phone number"
+                                   className="appearance-none relative block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+                        </div>
+                        <div className="py-3">
+                            <label htmlFor="role" className="block text-sm font-medium font-serif text-amber-50">Role</label>
+                            <input type="text" name="role" id="role" required placeholder="Your role (e.g., user, admin)"
+                                   className="appearance-none relative block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+                        </div>
+                        <div className="py-3">
+                            <label htmlFor="password" className="block text-sm font-medium font-serif text-amber-50">Password</label>
+                            <input type="password" name="password" id="password" required placeholder="Create a password"
+                                   className="appearance-none relative block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+                        </div>
+                    </div>
+                    <div>
+                        <button type="submit"
+                                className="group relative w-full flex justify-center py-2 px-4 border border-transparent font-serif text-m font-large rounded-md text-gray-500 font-bold bg-amber-100 hover:bg-amber-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
+                            Register
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    );
 }

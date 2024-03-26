@@ -68,7 +68,7 @@ export default async function DashboardPage() {
           
           <label className="block">
             <span className="text-gray-700">Picture</span>
-            <input type="text" required name="picture" placeholder="URL"
+            <input type="url" required name="picture" placeholder="URL"
                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
           </label>
 
