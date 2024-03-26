@@ -6,6 +6,7 @@ import { editBooking, removeBooking } from "@/redux/features/bookSlice";
 import getUserProfile from "@/libs/getUserProfile";
 import { BookingItem } from "../../interfaces";
 import Link from "next/link";
+
 export default function BookingList() {
   const { data: session } = useSession();
   const dispatch = useDispatch();
@@ -33,12 +34,12 @@ export default function BookingList() {
       <div>No Massage Shop Appointment</div>
     ) : (
       filteredBookItems.map((bookingItem: BookingItem) => (
-        <div className="bg-slate-200 rounded px-5 mx-5 py-2 my-2" key={bookingItem.id}>
-          <div className="text-md">Name: {bookingItem.userName}</div>
-          <div className="text-md">Massage shop: {bookingItem.massage}</div>
-          <div className="text-md">Reservation Date: {bookingItem.reserveDate}</div>
+        <div className="bg-slate-100 rounded px-5 mx-5 py-2 my-2" key={bookingItem.id}>
+          <div className="text-md font-serif">Name: {bookingItem.userName}</div>
+          <div className="text-md font-serif">Massage shop: {bookingItem.massage}</div>
+          <div className="text-md font-serif">Reservation Date: {bookingItem.reserveDate}</div>
           <button
-            className="block rounded-md bg-sky-600 hover:bg-indigo-600 px-3 py-2 shadow-sm text-white"
+            className="m-5 text-black bg-gradient-to-r from-yellow-500 via-yellow-300 to-yellow-200 bg-opacity-90 transition-colors ease-in-out font-serif  py-2 px-8 rounded-3xl  hover:bg-gradient-to-r from-yellow-600 via-yellow-500 to-yellow-300 bg-opacity-90 transition-colors duration-300 ease-in-out"
             onClick={async () => {
               dispatch(removeBooking(bookingItem.id));
               await fetch(`/api/appointments/${bookingItem.id}`,{method:"DELETE"})
@@ -50,11 +51,11 @@ export default function BookingList() {
           >
             Remove Booking
           </button>
-          <Link href={`/edit-reservation/${bookingItem.id}`} 
-                className="block rounded-md bg-sky-600 hover:bg-indigo-600 px-3 py-2 shadow-sm text-white">
-              Edit booking
-            
+          <button className="m-5 text-black bg-gradient-to-r from-yellow-500 via-yellow-300 to-yellow-200 bg-opacity-90 transition-colors ease-in-out font-serif  py-2 px-8 rounded-3xl  hover:bg-gradient-to-r from-yellow-600 via-yellow-500 to-yellow-300 bg-opacity-90 transition-colors duration-300 ease-in-out">
+          <Link href={`/edit-reservation/${bookingItem.id}`}>
+            Edit booking
           </Link>
+          </button>
         </div>
       ))
     );
@@ -62,7 +63,7 @@ export default function BookingList() {
 
   return (
     <>
-      <div className="text-xl px-5 py-3">Booking Information</div>
+      <div className="text-xl px-5 py-3 font-serif mt-5 text-center"> <strong>Booking Information</strong></div>
       {profile ? renderBookingItems() : <div>Loading profile...</div>}
     </>
   );
