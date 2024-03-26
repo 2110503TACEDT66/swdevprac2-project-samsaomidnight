@@ -44,12 +44,12 @@ export default async function DashboardPage() {
 
     return (
         <main className="bg-stone-400 m-5 p-5 rounded-lg shadow">
-    <div className="text-xl font-medium text-gray-800 font-serif mb-4">{profile.data.name}</div>
+    <div className="text-xl font-medium text-gray-800 font-serif mb-4">Hello, {profile.data.name} you are an {profile.data.role}</div>
     <div className="overflow-hidden bg-white rounded-lg shadow mb-6">
       <table className="min-w-full leading-normal">
         <tbody>
-          <tr><td className="px-5 py-3 border-b border-gray-200 bg-white text-sm">Name</td><td className="px-5 py-3 border-b border-gray-200 bg-white text-sm">{profile.data.name}</td></tr>
-          <tr><td className="px-5 py-3 border-b border-gray-200 bg-white text-sm">Email</td><td className="px-5 py-3 border-b border-gray-200 bg-white text-sm">{profile.data.email}</td></tr>
+          <tr><td className="px-5 py-3 border-b border-gray-200 bg-white text-sm">Name</td><td className="px-5 py-3 border-b border-gray-200 bg-white text-sm ">{profile.data.name}</td></tr>
+          <tr><td className="px-5 py-3 border-b border-gray-200 bg-white text-sm">Email</td><td className="px-5 py-3 border-b border-gray-200 bg-white  text-sm">{profile.data.email}</td></tr>
           <tr><td className="px-5 py-3 border-b border-gray-200 bg-white text-sm">Member Since</td><td className="px-5 py-3 border-b border-gray-200 bg-white text-sm">{createdAt.toString()}</td></tr>
         </tbody>
       </table>

@@ -1,11 +1,13 @@
 export default function About() {
     return (
-        <main>
-            <div className="font-serif text-xl p-5">
-            Hi, we are samsaomidnight
-            </div>
-            <div className="font-serif text-l p-10">We provide you all of the Massage Shop in Thailand (just kidding). This website is our project in the subject of Frontend which we use our Backend project to accomplish this website.
-                Hope y'all enjoy to use this website 
+        <main className="min-h-screen flex items-center justify-center bg-stone-300">
+            <div className="max-w-2xl bg-white rounded-xl shadow-xl p-10 my-4 border border-gray-700">
+                <h1 className="text-4xl font-bold text-black text-center mb-8">
+                    Samsaomidnight
+                </h1>
+                <p className="text-lg text-gray-500">
+                    Immerse yourself in the epitome of luxury with our exclusive collection of massage havens in Thailand. Meticulously crafted, our website is a reflection of the premium experience we offer. Revel in the opulence and tranquility that awaits you at Samsaomidnight.
+                </p>
             </div>
         </main>
     )

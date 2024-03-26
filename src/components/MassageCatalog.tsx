@@ -10,7 +10,7 @@ export default async function MassageCatalog({massageJson}:{massageJson:MassageJ
         <div className="font-serif font-lg">
             Explore {massageJsonReady.count} massage shops in our catalog
             </div>
-            <div style={{margin:"20px", display:"flex", flexDirection:"row", flexWrap:"wrap", justifyContent: "space-around", alignContent:"space-around"}}>
+            <div style={{margin:"20px", display:"flex", flexDirection:"row", flexWrap:"wrap", justifyContent: "space-around", alignContent:"space-around"}} >
                 {
                     massageJsonReady.data.map((massageItem: MassageItem)=>(
                         <Link href={`/massage/${massageItem._id}`}

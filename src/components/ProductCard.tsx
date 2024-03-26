@@ -6,7 +6,7 @@ export default function ProductCard({massageName, imgSrc, onCompare}:{massageNam
 
     return(
         <InteractiveCard contentName={massageName}>
-            <div className='w-full h-[70%] relative rounded-t-lg'>
+            <div className='w-full h-[70%] relative rounded-t-lg bg-gray-200'>
                 <Image src = {imgSrc}
                 alt = 'Product Picture'
                 fill = {true}
