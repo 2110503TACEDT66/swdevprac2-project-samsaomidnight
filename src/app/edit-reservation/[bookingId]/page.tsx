@@ -1,76 +1,92 @@
 'use client'
-
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { useSession } from 'next-auth/react';
 import { useDispatch } from 'react-redux';
 import { editBooking } from '@/redux/features/bookSlice';
-import LocationDateReserve from '@/components/LocationDateReserve';
-import dayjs, { Dayjs } from 'dayjs'; // Import dayjs if you're using it for date manipulation
+import { BookingItem } from '../../../../interfaces';
+import { useRouter } from 'next/navigation';
+import { DatePicker } from '@mui/x-date-pickers';
+import "react-datepicker/dist/react-datepicker.css";
 
+interface Booking {
+  _id: string,
+  apptDate: string,
+  user: string,
+  massage: string,
+}
 
-const EditReservationPage = () => {
-    const [booking, setBooking] = useState(null);
-    const { data: session } = useSession();
-    const dispatch = useDispatch();
-    const router = useRouter();
-  
-    useEffect(() => {
-      if (router.isReady) {
-        console.log("router is ready")
-        const bookingId = router.query.bookingId; // Now it's safe to access bookingId
-        if (typeof bookingId === 'string') {
-          console.log('fetching')
-          fetch(`http://localhost:5001/api/v1/appointments/${bookingId}`)
-            .then(response => {
-              if (!response.ok) throw new Error(response.statusText);
-              return response.json();
-            })
-            .then(data => {
-              setBooking({
-                ...data,
-                reserveDate: dayjs(data.reserveDate),
-              });
-              console.log("done fetching")
-            })
-            .catch(() => router.push('/404'));
-        }
+const EditReservationPage = ({params}:{params:{bookingId:string}}) => {
+  const [booking, setBooking] = useState<Booking | null>(null);
+  const dispatch = useDispatch();
+  const bookingId = params.bookingId;
+  const router = useRouter();
+  const [userState, setUserState] = useState("");
+  const [apptDateState, setApptDateState] = useState("");
+
+  useEffect(() => {
+    fetch(`/api/appointments`, {
+      method: "GET",
+      headers: {
+        'Booking-Id': bookingId
       }
-    }, [router.isReady, router.query]);
-  
-   
-  const handleDateChange = (value: Dayjs) => {
-    setBooking({ ...booking, reserveDate: value });
-  };
+    })
+    .then(res => {
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+      return res.json();
+    })
+    .then(data => {
+      setBooking(data.data)
+      setUserState(data.data.user ?? "")
+    })
+    .catch(error => {
+      console.error("Fetch error: " + error.message);
+    });
+    }, []);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Here you would have your API call or Redux action to update the booking
-    if (booking) {
-      dispatch(editBooking(booking));
-      router.push('/cart'); 
-    }
+
+    await fetch(`/api/appointments`, {
+      method: "PUT",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        id: bookingId,
+        updateData: {
+          user: userState,
+          apptDate: apptDateState
+        }
+      })
+    })
+    .then((res)=>res.json())
+    .then((data)=>{
+      console.log(data)
+    })
   };
 
   if (!booking) {
-    return <p>Loading...</p>;
+    return <div>Loading booking details...</div>;
   }
 
   return (
-    <main className="w-full flex flex-col items-center space-y-4"> 
-      <div className="text-xl font-medium">Edit Reservation</div>
-      <div className="text-xl font-medium text-cyan-300"> Massage Shop: {booking.name} </div>
-      <div className="w-fit space-y-2 text-cyan-300">
-        <div className="text-md text-left text-gray-600">Reserve Date</div>
-        <LocationDateReserve onDateChange={handleDateChange} />
-      </div>
-      <button
-        className="block rounded-md bg-sky-600 hover:bg-indigo-600 px-3 py-2 shadow-sm text-white"
-        onClick={handleSubmit}
-      >
-        Save Changes
-      </button>            
-    </main>
+    <div className='mt-5 bg-white text-black'>
+      <form onSubmit={handleSubmit}>
+        {/* ... form fields ... */}
+        <div>{booking._id}</div>
+        <div>{booking.apptDate}</div>
+        <div>{booking.user}</div>
+        <div>{booking.massage}</div>
+        <input type="text" value={userState} onChange={(e)=>{setUserState(e.target.value)}} />
+          {/* <DatePicker
+          selected={apptDateState ? new Date(apptDateState) : null}
+          onChange={(date: Date | null) => setApptDateState(date ? date.toISOString().substring(0, 10) : '')}
+          dateFormat="yyyy-MM-dd"
+        /> */}
+        <button type="submit">Save Changes</button>
+      </form>
+    </div>
   );
 };
 
