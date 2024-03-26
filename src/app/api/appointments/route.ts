@@ -60,7 +60,7 @@ export async function POST(request: Request) {
         })
         const data = await result.json()
         console.log(data)
-        return new Response(JSON.stringify({ success: true }), {
+        return new Response(JSON.stringify({ success: true, data: data }), {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -73,8 +73,10 @@ export async function POST(request: Request) {
 
 export async function DELETE(request: Request) {
     try {
-        const body: ClientPutRequestBody = await request.json()
-        const result = await fetch(`http://localhost:5001/api/v1/appointments/${body.id}`, {
+        const header = request.headers;
+        const id = header.get("Book-Id")
+        console.log(id)
+        const result = await fetch(`http://localhost:5001/api/v1/appointments/${id}`, {
             method: "DELETE",
         })
         const data = await result.json()

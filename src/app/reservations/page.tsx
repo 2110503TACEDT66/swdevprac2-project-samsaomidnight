@@ -37,7 +37,8 @@ export default function Reservations () {
           const user = await getUserProfile(session.user.token);
           setProfile(user)
           if(reserveDate && name) {
-              const item:BookingItem = {
+              let item:BookingItem = {
+                  mongoid: "",
                   userName: profile.data.name,
                   massage: name,
                   reserveDate: dayjs(reserveDate).format("YYYY-MM-DD")
@@ -52,7 +53,11 @@ export default function Reservations () {
                   massage: mid,
                   apptDate: item.reserveDate
                 })
+              }).then(res=>res.json()).then((data)=>{
+                console.log("data", data)
+                item.mongoid = data.data.data._id
               })
+              console.log(item)
               dispatch(addBooking(item))
               // console.log(item)
           }

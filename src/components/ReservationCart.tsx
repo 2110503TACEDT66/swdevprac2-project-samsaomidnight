@@ -41,7 +41,13 @@ export default function BookingList() {
             className="block rounded-md bg-sky-600 hover:bg-indigo-600 px-3 py-2 shadow-sm text-white"
             onClick={async () => {
               dispatch(removeBooking(bookingItem.id));
-              await fetch(`/api/appointments/${bookingItem.id}`,{method:"DELETE"})
+              await fetch(`/api/appointments`,{method:"DELETE",
+              headers: {
+                'Content-Type': 'application/json',
+                'Book-Id': bookingItem.mongoid
+              }
+            })
+
               .then(res=>res.json())
               .then((data)=>{
                 console.log(data)
