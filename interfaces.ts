@@ -36,6 +36,7 @@ export interface OpenCloseTime {
     userName: string;
     massage: string;
     reserveDate: string; // reserve date
+    
   }
   
   export interface BookState {

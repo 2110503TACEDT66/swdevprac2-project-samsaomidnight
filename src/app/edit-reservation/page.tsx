@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { editBooking } from '@/redux/features/bookSlice';
 import { BookingItem } from '../../../interfaces';
@@ -7,15 +7,14 @@ import { BookingItem } from '../../../interfaces';
 const EditReservationPage = () => {
   const [booking, setBooking] = useState<BookingItem | null>(null);
   const router = useRouter();
-  const { bookingId } = router.query;
   const dispatch = useDispatch();
+  const { bookingId } = router.query;
 
   useEffect(() => {
     const fetchBooking = async () => {
-      // Fetch the booking details from your API and set it in state
-      // Replace '/api/bookings/' with your actual API endpoint
+      // Assuming you have an API endpoint to fetch a specific booking by ID
       const response = await fetch(`/api/bookings/${bookingId}`);
-      const data = await response.json();
+      const data: BookingItem = await response.json();
       setBooking(data);
     };
 
@@ -26,25 +25,27 @@ const EditReservationPage = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    // Dispatch an action to edit the booking
-    // You need to define how your update logic will work and ensure the payload is correct
-    dispatch(editBooking(booking));
-    // After dispatching, navigate back to the bookings page or show a success message
-    router.push('/path-to-redirect-after-edit');
+    if (booking) {
+      dispatch(editBooking(booking));
+      // Navigate back or to another page upon success
+      router.push('/path-to-redirect-after-success');
+    }
   };
 
   if (!booking) {
     return <div>Loading booking details...</div>;
   }
 
+  // Render form with booking data allowing to edit and submit changes
   return (
     <form onSubmit={handleSubmit}>
+      {/* Form fields for editing the booking, e.g., */}
       <input
         type="text"
-        value={booking.massage}
+        value={booking.massage || ''}
         onChange={(e) => setBooking({ ...booking, massage: e.target.value })}
       />
-      {/* Add other form fields for booking details here */}
+      {/* Add other necessary fields and a submit button */}
       <button type="submit">Save Changes</button>
     </form>
   );
