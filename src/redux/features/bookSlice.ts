@@ -41,15 +41,14 @@ export const bookSlice = createSlice({
     editBooking: (state, action: PayloadAction<BookingItem>) => {
       const index = state.bookItems.findIndex(booking => booking.id === action.payload.id);
       if (index !== -1) {
-        // Check if the current user is allowed to edit the booking
-        if (state.currentUserId === state.bookItems[index].userId || state.currentUserRole === 'admin') {
-          state.bookItems[index] = { ...state.bookItems[index], ...action.payload };
-          console.log(`Booking updated: ${action.payload.id}`);
-        } else {
-          console.warn("Not authorized to edit this booking.");
-        }
+        state.bookItems[index] = { ...state.bookItems[index], ...action.payload };
+        // Log the update
+        console.log(`Booking updated: ${action.payload.id}`);
+      } else {
+        console.warn("Booking not found.");
       }
     },
+    
     
   },
 });
