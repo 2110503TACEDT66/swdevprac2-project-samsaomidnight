@@ -7,8 +7,16 @@ export async function GET(request: Request) {
     try {
         const header = request.headers;
         const bookingId = header.get("Booking-Id");
-        const result = await fetch(`http://localhost:5001/api/v1/appointments/${bookingId}`);
-        const data = await result.json();
+        let data;
+        if (bookingId) {
+            console.log("Fetch some random shit", bookingId)
+            const result = await fetch(`http://localhost:5001/api/v1/appointments/${bookingId}`);
+            data = await result.json();
+        } else {
+            console.log("Fetch all shit")
+            const result = await fetch(`http://localhost:5001/api/v1/appointments`);
+            data = await result.json();
+        }
         return new Response(JSON.stringify(data), { // Send 'data' instead of 'result'
             headers: {
                 'Content-Type': 'application/json'

@@ -55,14 +55,15 @@ export default function Reservations () {
                 })
               }).then(res=>res.json()).then((data)=>{
                 console.log("data", data)
-                item.mongoid = data.data._id
+                item.mongoid = data.data.data._id
+                console.log("bfjanfjndjndjad:", data.data.data._id)
+                if (data.data.success) {
+                  dispatch(addBooking(item))
+                } else {
+                  alert("You've already booked 3 session")
+                }
                 return data
               })
-              if (shit_happen.data.success) {
-                dispatch(addBooking(item))
-              } else {
-                alert("You've already booked 3 session")
-              }
               // console.log(item)
           }
         }
