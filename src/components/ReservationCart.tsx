@@ -102,7 +102,7 @@ export default function BookingList() {
             Remove Booking
           </button>
           <button className="m-5 text-black bg-gradient-to-r from-yellow-500 via-yellow-300 to-yellow-200 bg-opacity-90 transition-colors ease-in-out font-serif  py-2 px-8 rounded-3xl  hover:bg-gradient-to-r from-yellow-600 via-yellow-500 to-yellow-300 bg-opacity-90 transition-colors duration-300 ease-in-out">
-            <Link href={`/edit-reservation/${bookingItem.mongoid}`}>
+            <Link href={`/edit-reservation/${bookingItem._id}`}>
               <div>
                 Edit booking
               </div>
