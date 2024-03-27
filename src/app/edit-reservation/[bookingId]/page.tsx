@@ -6,6 +6,10 @@ import { BookingItem } from '../../../../interfaces';
 import { useRouter } from 'next/navigation';
 import { DatePicker } from '@mui/x-date-pickers';
 import "react-datepicker/dist/react-datepicker.css";
+import { Session } from 'inspector';
+import { useSession } from 'next-auth/react';
+import LocationDateReserve from '@/components/LocationDateReserve';
+import { Dayjs } from 'dayjs';
 
 interface Booking {
   _id: string,
@@ -20,22 +24,27 @@ const EditReservationPage = ({params}:{params:{bookingId:string}}) => {
   const bookingId = params.bookingId;
   const router = useRouter();
   const [userState, setUserState] = useState("");
-  const [apptDateState, setApptDateState] = useState("");
+  const [apptDateState, setApptDateState] = useState<Dayjs>();
+  const { data: session } = useSession();
 
   useEffect(() => {
-    fetch(`/api/appointments`, {
+    fetch(`http://localhost:5001/api/v1/appointments/${params.bookingId}`, {
       method: "GET",
       headers: {
-        'Booking-Id': bookingId
+        "Content-Type" : "application/json",
+        authorization : `Bearer ${session?.user.token}`
       }
     })
     .then(res => {
+      console.log("heyyyyyyyyyyy")
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
       }
       return res.json();
     })
     .then(data => {
+      console.log("eieieieiei",data)
+
       setBooking(data.data)
       setUserState(data.data.user ?? "")
     })
@@ -45,19 +54,17 @@ const EditReservationPage = ({params}:{params:{bookingId:string}}) => {
     }, []);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    console.log('apptDateState', apptDateState)
     event.preventDefault();
 
-    await fetch(`/api/appointments`, {
+    await fetch(`http://localhost:5001/api/v1/appointments/${params.bookingId}`, {
       method: "PUT",
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${session?.user.token}`
       },
       body: JSON.stringify({
-        id: bookingId,
-        updateData: {
-          user: userState,
-          apptDate: apptDateState
-        }
+          apptDate: apptDateState 
       })
     })
     .then((res)=>res.json())
@@ -73,17 +80,12 @@ const EditReservationPage = ({params}:{params:{bookingId:string}}) => {
   return (
     <div className='mt-5 bg-white text-black'>
       <form onSubmit={handleSubmit}>
-        {/* ... form fields ... */}
         <div>{booking._id}</div>
         <div>{booking.apptDate}</div>
         <div>{booking.user}</div>
         <div>{booking.massage}</div>
         <input type="text" value={userState} onChange={(e)=>{setUserState(e.target.value)}} />
-          {/* <DatePicker
-          selected={apptDateState ? new Date(apptDateState) : null}
-          onChange={(date: Date | null) => setApptDateState(date ? date.toISOString().substring(0, 10) : '')}
-          dateFormat="yyyy-MM-dd"
-        /> */}
+        <LocationDateReserve onDateChange={(value:Dayjs) => {setApptDateState(value)}} />
         <button type="submit">Save Changes</button>
       </form>
     </div>
