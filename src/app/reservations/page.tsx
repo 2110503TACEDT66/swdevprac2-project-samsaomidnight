@@ -55,9 +55,10 @@ export default function Reservations () {
                 })
               }).then(res=>res.json()).then((data)=>{
                 console.log("data", data)
-                item.mongoid = data.data.data._id
+                item.mongoid = data.data._id
               })
               console.log(item)
+              
               dispatch(addBooking(item))
               // console.log(item)
           }
