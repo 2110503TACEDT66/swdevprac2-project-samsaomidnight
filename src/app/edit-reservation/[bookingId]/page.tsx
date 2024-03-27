@@ -42,6 +42,7 @@ const EditReservationPage = ({params}:{params:{bookingId:string}}) => {
       }
       return res.json();
     })
+
     .then(data => {
       console.log("eieieieiei",data)
 
@@ -78,17 +79,20 @@ const EditReservationPage = ({params}:{params:{bookingId:string}}) => {
   }
 
   return (
-    <div className='mt-5 bg-white text-black'>
+    <main className='flex justify-center items-center py-10'>
+    <div className='w-[100%] flex flex-col items-center py-10'>
       <form onSubmit={handleSubmit}>
-        <div>{booking._id}</div>
+        <div className='font-serif text-lg font-semibold p-3'>Change Booking Date</div>
+        {/* {/* <div>{booking._id}</div>
         <div>{booking.apptDate}</div>
         <div>{booking.user}</div>
-        <div>{booking.massage}</div>
-        <input type="text" value={userState} onChange={(e)=>{setUserState(e.target.value)}} />
+        <div>{booking.massage}</div> 
+        <input type="text" value={userState} onChange={(e)=>{setUserState(e.target.value)}} /> */}
         <LocationDateReserve onDateChange={(value:Dayjs) => {setApptDateState(value)}} />
-        <button type="submit">Save Changes</button>
+        <button type="submit" className='m-5 text-black bg-gradient-to-r from-yellow-500 via-yellow-300 to-yellow-200 bg-opacity-90 transition-colors ease-in-out font-serif  py-2 px-8 rounded-3xl  hover:bg-gradient-to-r from-yellow-600 via-yellow-500 to-yellow-300 bg-opacity-90 transition-colors duration-300 ease-in-out'>Save Changes</button>
       </form>
     </div>
+    </main>
   );
 };
 

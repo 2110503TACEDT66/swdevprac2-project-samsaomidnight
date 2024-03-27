@@ -43,7 +43,7 @@ export default function Reservations () {
                   massage: name,
                   reserveDate: dayjs(reserveDate).format("YYYY-MM-DD")
               }
-              await fetch(`/api/appointments`, {
+              const shit_happen = await fetch(`/api/appointments`, {
                 method: "POST",
                 headers: {
                   'Content-Type': 'application/json'
@@ -56,10 +56,13 @@ export default function Reservations () {
               }).then(res=>res.json()).then((data)=>{
                 console.log("data", data)
                 item.mongoid = data.data._id
+                return data
               })
-              console.log(item)
-              
-              dispatch(addBooking(item))
+              if (shit_happen.data.success) {
+                dispatch(addBooking(item))
+              } else {
+                alert("You've already booked 3 session")
+              }
               // console.log(item)
           }
         }

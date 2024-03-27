@@ -28,7 +28,7 @@ export default function BookingList() {
     // Filter bookings based on user role and name
     const filteredBookItems =
       profile?.data?.role !== "admin"
-        ? bookItems.filter((item: any) => item.userName === profile.data.name)
+        ? bookItems.filter((item: any) => item.userName === profile?.data.name)
         : bookItems;
     console.log("filteredBookItems", filteredBookItems);
     return filteredBookItems.length === 0 ? (
@@ -49,8 +49,8 @@ export default function BookingList() {
           <button
             className="m-5 text-black bg-gradient-to-r from-yellow-500 via-yellow-300 to-yellow-200 bg-opacity-90 transition-colors ease-in-out font-serif  py-2 px-8 rounded-3xl  hover:bg-gradient-to-r from-yellow-600 via-yellow-500 to-yellow-300 bg-opacity-90 transition-colors duration-300 ease-in-out"
             onClick={async () => {
-              dispatch(removeBooking(bookingItem.id));
-              await fetch(`/api/appointments`, {
+              dispatch(removeBooking(bookingItem.mongoid));
+              const chad = await fetch(`/api/appointments`, {
                 method: "DELETE",
                 headers: {
                   "Content-Type": "application/json",
@@ -59,15 +59,16 @@ export default function BookingList() {
               })
                 .then((res) => res.json())
                 .then((data) => {
-                  console.log(data);
-                });
+                  return data
+              });
             }}
+
           >
             Remove Booking
           </button>
           <button className="m-5 text-black bg-gradient-to-r from-yellow-500 via-yellow-300 to-yellow-200 bg-opacity-90 transition-colors ease-in-out font-serif  py-2 px-8 rounded-3xl  hover:bg-gradient-to-r from-yellow-600 via-yellow-500 to-yellow-300 bg-opacity-90 transition-colors duration-300 ease-in-out">
             <Link href={`/edit-reservation/${bookingItem.mongoid}`}>
-              <div className="m-5 text-black bg-gradient-to-r from-yellow-500 via-yellow-300 to-yellow-200 bg-opacity-90 transition-colors ease-in-out font-serif py-2 px-8 rounded-3xl hover:bg-gradient-to-r from-yellow-600 via-yellow-500 to-yellow-300 bg-opacity-90 transition-colors duration-300 ease-in-out">
+              <div>
                 Edit booking
               </div>
             </Link>
