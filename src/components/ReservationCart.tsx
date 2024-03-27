@@ -53,9 +53,12 @@ export default function BookingList() {
 
   const renderBookingItems = () => {
     // Filter bookings based on user role and name
+    console.log("All bookking, and user data:",
+      bookItems, profile.data
+    )
     const filteredBookItems =
       profile?.data?.role !== "admin"
-        ? bookItems?.filter((item: any) => item.userName === profile?.data.name)
+        ? bookItems?.filter((item: any) => item.user === profile?.data._id)
         : bookItems;
     console.log("filteredBookItems", filteredBookItems);
     return filteredBookItems?.length === 0 ? (
@@ -66,7 +69,7 @@ export default function BookingList() {
           className="bg-slate-100 rounded px-5 mx-5 py-2 my-2"
           key={bookingItem.id}
         >
-          <div className="text-md font-serif">Name: {profile?.data.name}</div>
+          <div className="text-md font-serif">Name: {profile?.data?.role !== "admin" ? profile?.data.name : bookingItem.user}</div>
           <div className="text-md font-serif">
             Massage shop: {bookingItem.massage}
           </div>
