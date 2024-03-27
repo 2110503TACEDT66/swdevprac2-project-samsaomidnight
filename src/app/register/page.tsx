@@ -12,7 +12,7 @@ export default function RegisterPage() {
         const password = addUserForm.get("password")
 
         try{
-            dbConnect()
+            await dbConnect()
             const user = await User.create({
                 "name": name,
                 "email": email,
