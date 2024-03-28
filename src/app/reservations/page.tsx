@@ -18,7 +18,7 @@ export default function Reservations () {
     const mid = urlParams.get('id')
     const name = urlParams.get('name')
     const { data: session } = useSession();
-    const [profile, setProfile] = useState<{ data?: { name?: string } }>({ data: {} });
+    const [profile, setProfile] = useState<any | null>(null);
 
     useEffect(() => {
     const fetchData = async () => {
@@ -38,10 +38,15 @@ export default function Reservations () {
           setProfile(user)
           if(reserveDate && name) {
               let item:BookingItem = {
-                  mongoid: "",
-                  userName: profile.data.name,
-                  massage: name,
-                  reserveDate: dayjs(reserveDate).format("YYYY-MM-DD")
+                mongoid: "",
+                userName: profile.data.name,
+                massage: name,
+                reserveDate: dayjs(reserveDate).format("YYYY-MM-DD"),
+                _id: "",
+                user: "",
+                apptDate: "",
+                id: "",
+                userId: ""
               }
               const shit_happen = await fetch(`/api/appointments`, {
                 method: "POST",
