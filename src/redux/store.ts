@@ -17,7 +17,7 @@ export const store = configureStore({
     reducer: reduxPersistedReducer
 })
 
-export const selectUserBookings = (state: RootState, userId: string) => {
+export const selectUserBookings = (state: any, userId: string) => {
     if (state.cart.userRole === 'admin') {
       return state.cart.bookItems; // Admin can see all bookings
     } else {
