@@ -6,6 +6,8 @@ const initialState: BookState = {
   bookItems: [],
   massageShops: [], // Assuming this would be fetched from the backend or statically defined
   maxReservationsPerUser: 3,
+  currentUserRole: "user",
+  currentUserId: ""
 };
 
 export const bookSlice = createSlice({
