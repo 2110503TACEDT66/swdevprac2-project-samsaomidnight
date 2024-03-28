@@ -2,7 +2,7 @@ import NextAuth from "next-auth/next";
 import { AuthOptions } from "next-auth";
 import userLogIn from "@/libs/userLogIn";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { authOptions } from "./auth";
+import { authOptions } from "../../../../libs/auth";
 
 
 const handler = NextAuth(authOptions);
