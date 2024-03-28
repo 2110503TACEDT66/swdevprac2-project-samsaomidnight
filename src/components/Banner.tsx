@@ -5,7 +5,7 @@ import styles from './banner.module.css'
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/libs/auth";
 import { useEffect } from 'react';
 import getUserProfile from "@/libs/getUserProfile";
 

@@ -8,7 +8,7 @@ import { MassageItem } from "../../interfaces";
 
 export default function MassagePanel() {
 
-    const [massageResponse, setMassageResponse] = useState(null)
+    const [massageResponse, setMassageResponse] = useState<any | null>(null);
     useEffect(()=>{
         const fetchData = async () => {
             const massages = await getMassages()
