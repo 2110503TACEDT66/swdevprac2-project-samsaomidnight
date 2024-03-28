@@ -32,6 +32,9 @@ export interface OpenCloseTime {
   
   export interface BookingItem {
     mongoid: string;
+    _id:string;
+    user: string;
+    apptDate: string;
     id: string; // Unique booking ID
     userId: string; // Unique user ID
     userName: string;

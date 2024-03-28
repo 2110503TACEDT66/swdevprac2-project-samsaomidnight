@@ -12,7 +12,7 @@ export default function BookingList() {
   const dispatch = useDispatch();
   // const bookItems = useAppSelector((state) => state.bookSlice.bookItems);
   const [bookItems, setBookItems] = useState<any | null>(null);
-  const [profile, setProfile] = useState(null);
+  const [profile, setProfile] = useState<any | null>(null);
   const [refetch, setRefetch] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
@@ -31,11 +31,11 @@ export default function BookingList() {
     const allshit = async () => {
       if (session?.user?.token) {
         const fetchedProfile = await getUserProfile(session.user.token);
-        const shit = await fetch("/api/appointments").then(async (shit) => {
-          const json_shit = await shit.json();
-          console.log("got this", json_shit);
-          if (json_shit.success) {
-            return json_shit
+        const shit = await fetch("/api/appointments").then(async response => {
+          // const json_shit = await shit.json();
+          // console.log("got this", json_shit);
+          if (response.ok) {
+            return await response.json()
           } else {
             return []
           }
@@ -54,7 +54,7 @@ export default function BookingList() {
   const renderBookingItems = () => {
     // Filter bookings based on user role and name
     console.log("All bookking, and user data:",
-      bookItems, profile.data
+      profile
     )
     const filteredBookItems =
       profile?.data?.role !== "admin"
