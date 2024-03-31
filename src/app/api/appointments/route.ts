@@ -1,4 +1,5 @@
 import * as dotenv from "dotenv";
+import { NextResponse } from "next/server";
 dotenv.config();
 interface ClientPutRequestBody {
     id: string,
@@ -47,11 +48,8 @@ export async function PUT(request: Request) {
         })
         const data = await result.json()
         console.log(data)
-        return new Response(JSON.stringify({ success: true }), {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
+        return NextResponse.json(data)
+                
     } catch (error) {
         console.error(error)
     }
