@@ -1,3 +1,5 @@
+import * as dotenv from "dotenv";
+dotenv.config();
 interface ClientPutRequestBody {
     id: string,
     updateData: Object
@@ -10,11 +12,11 @@ export async function GET(request: Request) {
         let data;
         if (bookingId) {
             console.log("Fetch some random shit", bookingId)
-            const result = await fetch(`http://localhost:5001/api/v1/appointments/${bookingId}`);
+            const result = await fetch(`${process.env.BACKEND_URL}/api/v1/appointments/${bookingId}`);
             data = await result.json();
         } else {
             console.log("Fetch all shit")
-            const result = await fetch(`http://localhost:5001/api/v1/appointments`);
+            const result = await fetch(`${process.env.BACKEND_URL}/api/v1/appointments`);
             data = await result.json();
         }
         return new Response(JSON.stringify(data), { // Send 'data' instead of 'result'
@@ -36,7 +38,7 @@ export async function GET(request: Request) {
 export async function PUT(request: Request) {
     try {
         const body: ClientPutRequestBody = await request.json()
-        const result = await fetch(`http://localhost:5001/api/v1/appointments/${body.id}`, {
+        const result = await fetch(`${process.env.BACKEND_URL}/api/v1/appointments/${body.id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -59,7 +61,7 @@ export async function POST(request: Request) {
     try {
         const body = await request.json()
         console.log("back",body)
-        const result = await fetch(`http://localhost:5001/api/v1/massages/${body.massage}/appointments/`, {
+        const result = await fetch(`${process.env.BACKEND_URL}/api/v1/massages/${body.massage}/appointments/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -84,7 +86,7 @@ export async function DELETE(request: Request) {
         const header = request.headers;
         const id = header.get("Book-Id")
         console.log(id)
-        const result = await fetch(`http://localhost:5001/api/v1/appointments/${id}`, {
+        const result = await fetch(`${process.env.BACKEND_URL}/api/v1/appointments/${id}`, {
             method: "DELETE",
         })
         const data = await result.json()

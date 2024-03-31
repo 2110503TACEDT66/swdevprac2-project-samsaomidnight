@@ -28,7 +28,7 @@ const testBookingData3 = {
 };
 
 describe('bookSlice', () => {
-  
+
   it('bookSlice reducer works correctly', () => {
     const afterAddReducer1 = bookSlice(initialState, addBooking(testBookingData1))
     expect(afterAddReducer1.bookItems.length).toBe(1)
