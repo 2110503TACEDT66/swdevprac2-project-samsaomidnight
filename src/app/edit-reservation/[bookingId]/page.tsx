@@ -12,6 +12,7 @@ import { Session } from "inspector";
 import { useSession } from "next-auth/react";
 import LocationDateReserve from "@/components/LocationDateReserve";
 import { Dayjs } from "dayjs";
+export const dynamic = 'force-dynamic';
 
 interface Booking {
   _id: string;
